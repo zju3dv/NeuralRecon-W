@@ -1,5 +1,5 @@
 # Neural 3D Reconstruction in the Wild
-### [Project Page](https://zju3dv.github.io/neuralrecon-w) | [Paper](https://arxiv.org/pdf/2205.xxxxx.pdf)
+### [Project Page](https://zju3dv.github.io/neuralrecon-w) | [Paper](https://arxiv.org/pdf/2205.12955)
 <br/>
 
 > Neural 3D Reconstruction in the Wild  
