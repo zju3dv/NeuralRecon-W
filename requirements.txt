@@ -1,0 +1,35 @@
+pytorch-lightning==1.4.8
+torchmetrics==0.7.0
+einops==0.3.0
+test-tube==0.7.5
+kornia==0.4.1
+opencv-python==4.5.1.48
+matplotlib==3.3.3
+jupyter
+imageio==2.9.0
+imageio-ffmpeg==0.4.2
+pandas==1.1.5
+torch_optimizer
+lpips==0.1.3
+loguru
+yacs
+h5py
+
+# for phototourism visualization
+plotly==4.14.3
+
+# for mesh
+PyMCubes==0.1.2
+pycollada==0.7.1
+trimesh==3.9.1
+pyglet==1.5.10
+networkx==2.5
+scikit-image
+
+# for point cloud
+plyfile==0.7.2
+open3d==0.12.0
+
+# mmsegmentation
+mmcv-full -f https://download.openmmlab.com/mmcv/dist/cu113/torch1.11/index.html
+mmsegmentation

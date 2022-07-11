@@ -1,0 +1,91 @@
+NEUCONW:
+  N_SAMPLES: 8
+  N_IMPORTANCE: 16
+  UP_SAMPLE_STEP: 2
+  N_OUTSIDE: 4
+  USE_DISP: False
+  PERTURB: 1.0
+  NOISE_STD: 1.0
+
+  NEAR_FAR_OVERRIDE: True
+  DEPTH_LOSS: False
+  S_VAL_BASE: 3
+  BOUNDARY_SAMPLES: 10
+  VOXEL_SIZE: 0.25
+  MIN_TRACK_LENGTH: 50
+  SAMPLE_RANGE: 16
+  SDF_THRESHOLD: 0.0
+  TRAIN_VOXEL_SIZE: 0.04
+  UPDATE_FREQ: 5000
+  
+  N_VOCAB: 5000
+  ENCODE_A: True
+  N_A: 48
+  N_STATIC_HEAD: 1
+  ANNEAL_END: 50000
+
+  RENDER_BG: True
+  MESH_MASK_LIST: ['sky']
+  RAY_MASK_LIST:  ['person', 'car', 'bicycle', 'minibike']
+  ENCODE_A_BG: True
+  FLOOR_NORMAL: False
+  FLOOR_LABELS: [ 'road' ]
+
+# network config
+  SDF_CONFIG:
+    d_in: 3
+    d_out: 513
+    d_hidden: 512
+    n_layers: 8
+    skip_in: (4,)
+    multires: 6
+    bias: 0.5
+    scale: 1
+    geometric_init: True
+    weight_norm: True
+    inside_outside: False
+
+  COLOR_CONFIG:
+    d_in: 9
+    d_feature: 512
+    mode: "idr"
+    d_out: 3
+    d_hidden: 256 
+    n_layers: 4
+    head_channels: 128
+    static_head_layers: 2
+    weight_norm: True
+    multires_view: 4
+
+  S_CONFIG:
+    init_val: 0.3
+
+# loss config
+  LOSS:
+    coef: 1.0
+    igr_weight: 0.1
+    mask_weight: 0.1
+    depth_weight: 0.1
+    floor_weight: 0.01
+
+DATASET:
+  ROOT_DIR: '/nas/users/chenxi/phototourism/training_set/brandenburg_gate'
+  DATASET_NAME: 'phototourism'
+  SPLIT: 'train'
+
+  PHOTOTOURISM:
+    IMG_DOWNSCALE: 1
+    USE_CACHE: True
+    CACHE_DIR: 'cache_sgs'
+
+TRAINER:
+  CANONICAL_BS: 4096
+  CANONICAL_LR: 1e-4
+
+  OPTIMIZER: "adam" 
+  WEIGHT_DECAY: 0 
+
+  LR_SCHEDULER: 'none'
+  SAVE_DIR: './checkpoints'
+  VAL_FREQ: 10000.0
+  SAVE_FREQ: 10000
