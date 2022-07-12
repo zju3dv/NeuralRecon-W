@@ -1,4 +1,5 @@
-from utils.colmap_utils import read_points3d_binary
+from utils.colmap_utils import \
+    read_cameras_binary, read_images_binary, read_points3d_binary
 import os
 import numpy as np
 import torch
@@ -8,9 +9,12 @@ import trimesh
 from scipy.spatial import KDTree
 import matplotlib.pyplot as plt
 # Get the color map by name:
-cm = plt.get_cmap('cool')
+cm = plt.get_cmap('jet')
 
-import open3d as o3d
+try:
+    import open3d as o3d
+except:
+    print("run without open3d")
 
 
 def o3d_load(file_pred, file_trgt, scene_config, is_mesh, bbx_name, save_dir):
@@ -33,7 +37,9 @@ def o3d_load(file_pred, file_trgt, scene_config, is_mesh, bbx_name, save_dir):
         mesh_pred.vertices = o3d.utility.Vector3dVector(verts_pred)
 
         pcd_pred = mesh_pred.crop(bbox_gt)
-        pcd_pred = pcd_pred.sample_points_uniformly(number_of_points=int(verts_trgt.shape[0]))
+        # pcd_pred = pcd_pred.sample_points_uniformly(number_of_points=int(verts_trgt.shape[0]) // 10)
+        # verts_pred = np.asarray(pcd_pred.vertices)
+        pcd_pred = pcd_pred.sample_points_uniformly(number_of_points=int(verts_trgt.shape[0]) * 10)
         verts_pred = np.asarray(pcd_pred.points)
     else:
         pcd_pred = o3d.io.read_point_cloud(file_pred)
@@ -88,7 +94,7 @@ def _compute(dist1, dist2, threshold):
                'recal': recal,
                'fscore': fscore,
                }
-    print(f"****metrics for threshold {threshold}****")
+    print(f"****metrics for threshold {threshold:.2f}****")
     print(metrics)
     print("******************************************")
     return metrics
@@ -108,11 +114,12 @@ def bbx_crop(points, bbx):
 
 
 def visualize_error(pc, dists, save_dir, threshold):
-    dists[dists < threshold] = 0
+    max_dist = threshold * 3
+    dists = np.minimum(dists, max_dist) / max_dist
     rgbs = cm(dists.reshape(-1, 1))[:, :, :3].reshape(-1, 3)
     pcd = o3d.geometry.PointCloud()
-    pcd.points = o3d.utility.Vector3dVector(pc[dists > threshold])
-    pcd.colors = o3d.utility.Vector3dVector(rgbs[dists > threshold])
+    pcd.points = o3d.utility.Vector3dVector(pc)
+    pcd.colors = o3d.utility.Vector3dVector(rgbs)
     o3d.io.write_point_cloud(save_dir, pcd)
 
 
@@ -133,7 +140,7 @@ def nn_correspondance(verts1, verts2, use_o3d=True):
         pcd.points = o3d.utility.Vector3dVector(verts1)
         kdtree = o3d.geometry.KDTreeFlann(pcd)
 
-        for vert in verts2:
+        for vert in tqdm(verts2):
             _, inds, dist = kdtree.search_knn_vector_3d(vert, 1)
             indices.append(inds[0])
             distances.append(np.sqrt(dist[0]))

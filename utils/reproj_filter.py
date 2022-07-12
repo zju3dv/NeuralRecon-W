@@ -7,7 +7,7 @@ import os
 
 import numpy as np
 import trimesh
-from tools.gt_generate.reproj_error import get_image_id, get_entrinsics, get_intrinsic
+from tools.reproj_error import get_image_id, get_entrinsics, get_intrinsic
 from utils.colmap_utils import \
     read_cameras_binary, read_images_binary, read_points3d_binary
 from utils.kaolin_renderer import kaolin_renderer
