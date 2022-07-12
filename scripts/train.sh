@@ -12,7 +12,7 @@ mkdir -p log
 mkdir -p logs/${jobname}
 cp ${config_file} logs/${jobname}
 
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+export CUDA_VISIBLE_DEVICES=5
 python train.py --cfg_path ${config_file} \
   --num_gpus $3 --num_nodes $4 \
   --num_epochs 20 --batch_size 2048 --test_batch_size 512 --num_workers 16 \

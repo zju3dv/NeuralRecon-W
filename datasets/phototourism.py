@@ -79,7 +79,18 @@ class PhototourismDataset(Dataset):
         self.scene_radius = scene_radius
 
         self.sfm_path = sfm_path
+        
+        # hard code sfm depth padding
+        scene_name = self.root_dir.rsplit('/')[-1]
+        if scene_name == 'brandenburg_gate':
+            depth_percent = 0.2
+        elif scene_name == 'palacio_de_bellas_artes':
+            depth_percent = 0.4
+        elif scene_name in ['lincoln_memorial', 'pantheon_exterior']:
+            depth_percent = 0.0
+        
         self.depth_percent = depth_percent
+        
         print(f"reading sfm result from {self.sfm_path}...")
 
         # Setup cache
@@ -649,19 +660,10 @@ class PhototourismDataset(Dataset):
                         valid_num = torch.sum(valid_depth).long().item()
                         current_len = rays.size()[0]
                         curent_percent = valid_num / current_len
-                        padding_length = int(
-                            np.ceil(
-                                (self.depth_percent * current_len - valid_num)
-                                / (1 - self.depth_percent)
-                            )
-                        )
-                        print(
-                            f"padding valid depth precentage: from {curent_percent} to {self.depth_percent} with padding {padding_length}"
-                        )
+                        padding_length = int(np.ceil((self.depth_percent * current_len - valid_num) / (1 - self.depth_percent)))
+                        print(f"padding valid depth precentage: from {curent_percent} to {self.depth_percent} with padding {padding_length}")
 
-                        pad_ind = torch.floor(
-                            (torch.rand(padding_length) * valid_num)
-                        ).long()
+                        pad_ind =  torch.floor((torch.rand(padding_length) * valid_num)).long()
                         result_length = padding_length + current_len
                         result_ind = torch.randperm(result_length)
 
@@ -671,12 +673,8 @@ class PhototourismDataset(Dataset):
                         paddings_rgbs = img[valid_depth, :][pad_ind]
                         img = torch.cat([img, paddings_rgbs], dim=0)[result_ind]
 
-                        test_ind = torch.round(
-                            (torch.rand(1024) * result_length)
-                        ).long()
-                        print(
-                            f"sample depth percent after padding: {torch.sum(rays[test_ind, -2] > 0) / rays[test_ind].size()[0]}"
-                        )
+                        test_ind =  torch.floor((torch.rand(1024) * result_length)).long()
+                        print(f"sample depth percent after padding: {torch.sum(rays[test_ind, -2] > 0) / rays[test_ind].size()[0]}")
 
                     self.all_rgbs += [img]
                     self.all_rays += [rays]
