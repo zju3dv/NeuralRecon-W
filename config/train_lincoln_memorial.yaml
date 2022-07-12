@@ -2,7 +2,7 @@ NEUCONW:
   N_SAMPLES: 8
   N_IMPORTANCE: 16
   UP_SAMPLE_STEP: 2
-  N_OUTSIDE: 8
+  N_OUTSIDE: 4
   USE_DISP: False
   PERTURB: 1.0
   NOISE_STD: 1.0
@@ -13,7 +13,7 @@ NEUCONW:
   BOUNDARY_SAMPLES: 10
   SAMPLE_RANGE: 16
   SDF_THRESHOLD: 0.0
-  TRAIN_VOXEL_SIZE: 0.08
+  TRAIN_VOXEL_SIZE: 0.04
   UPDATE_FREQ: 5000
   
   N_VOCAB: 5000
@@ -24,8 +24,8 @@ NEUCONW:
 
   RENDER_BG: True
   MESH_MASK_LIST: ['sky']
-  RAY_MASK_LIST:  None
-  ENCODE_A_BG: False
+  RAY_MASK_LIST:  ['person', 'car', 'bicycle', 'minibike']
+  ENCODE_A_BG: True
   FLOOR_NORMAL: False
   FLOOR_LABELS: [ 'road' ]
 
@@ -41,7 +41,7 @@ NEUCONW:
     scale: 1
     geometric_init: True
     weight_norm: True
-    inside_outside: True
+    inside_outside: False
 
   COLOR_CONFIG:
     d_in: 9
@@ -61,13 +61,13 @@ NEUCONW:
 # loss config
   LOSS:
     coef: 1.0
-    igr_weight: 0.1
+    igr_weight: 0.01
     mask_weight: 0.1
     depth_weight: 0.1
     floor_weight: 0.01
 
 DATASET:
-  ROOT_DIR: '/nas/users/chenxi/recon_data/hz322-2_xi/VID_00'
+  ROOT_DIR: 'data/heritage-recon/lincoln_memorial'
   DATASET_NAME: 'phototourism'
   SPLIT: 'train'
 
