@@ -1,5 +1,7 @@
 # Neural 3D Reconstruction in the Wild
+
 ### [Project Page](https://zju3dv.github.io/neuralrecon-w) | [Paper](https://arxiv.org/pdf/2205.12955)
+
 <br/>
 
 > Neural 3D Reconstruction in the Wild  
@@ -9,6 +11,7 @@
 ![demo_vid](assets/neuconw-github-teaser.gif)
 
 ## TODO List
+
 - [x] Training and inference code.
 - [x] Pipeline to reproduce the evaluation results on the proposed Hritage-Recon dataset.
 - [x] Config for reconstructing generic indoor scenes.
@@ -22,17 +25,27 @@ scripts/download_sem_model.sh
 ```
 
 ## Reproduce reconstruction results on Heritage-Recon
+
 ### Data setup
 
 Download the [Heritage-Recon](https://drive.google.com/drive/folders/1ch-RRnC2CrYSeKpbldSwZu5ifKQHS_CU?usp=sharing) dataset and put it under `data`. You can also use gdown to download it in command line:
 
-```
+```bash
 mkdir data && cd data
 gdown --id 1ch-RRnC2CrYSeKpbldSwZu5ifKQHS_CU
 ```
 
+Genrate cache for all scenes:
+
+```bash
+for SCENE_NAME in brandenburg_gate lincoln_memorial palacio_de_bellas_artes pantheon_exterior; do
+  scripts/data_generation.sh data/heritage-recon/${SCENE_NAME}
+done
+```
+
 ### Training
-To train scenes in our Heritage-Recon dataset: 
+
+To train scenes in our Heritage-Recon dataset:
 
 ```bash
 scripts/train.sh $EXP_NAME config/train_${SCENE_NAME}.yaml $NUM_GPU $NUM_NODE
@@ -53,11 +66,10 @@ The reconstructed meshes will be saved to `PROJECT_PATH/results`.
 Then run the evaluation pipline:
 
 ```bash
-scipts/eval_pipeline.sh $SCENE_NAME $MESH_PATH
+scripts/eval_pipeline.sh $SCENE_NAME $MESH_PATH
 ```
 
 Evaluation results will be saved in the same folder as the evaluated mesh.
-
 
 ## Reconstructing custom data
 
@@ -173,4 +185,5 @@ If you find this code useful for your research, please use the following BibTeX 
 ```
 
 ## Acknowledgement
+
 Part of our code is borrowed from [nerf_pl](https://github.com/kwea123/nerf_pl) and [NeuS](https://github.com/Totoro97/NeuS), thanks to their authors for the great works.
