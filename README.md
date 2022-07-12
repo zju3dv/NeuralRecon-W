@@ -10,7 +10,7 @@
 
 ## TODO List
 - [x] Training and inference code.
-- [x] Pipeline to reproduce the evaluation results on the proposed OnePose dataset.
+- [x] Pipeline to reproduce the evaluation results on the proposed Hritage-Recon dataset.
 - [x] Config for reconstructing generic indoor scenes.
 
 ## Installation
@@ -21,16 +21,51 @@ conda activate neuconw
 scripts/download_sem_model.sh
 ```
 
-## Data Preparation
+## Reproduce reconstruction results on Heritage-Recon
+### Data setup
 
-### Reproduce reconstruction results on Heritage-Recon
+Download the [Heritage-Recon](https://drive.google.com/drive/folders/1ch-RRnC2CrYSeKpbldSwZu5ifKQHS_CU?usp=sharing) dataset and put it under `data`. You can also use gdown to download it in command line:
 
-We take any COLMAP workspace as input. The following step is for your own data, our HERITAGE-RECON can be trained directly after download.
+```
+mkdir data && cd data
+gdown --id 1ch-RRnC2CrYSeKpbldSwZu5ifKQHS_CU
+```
 
-### Reconstructing custom data
+### Training
+To train scenes in our Heritage-Recon dataset: 
+
+```bash
+scripts/train.sh $EXP_NAME config/train_${SCENE_NAME}.yaml $NUM_GPU $NUM_NODE
+```
+
+Subsutitude `SCENE_NAME` with the scene you want to train. Please refer to our paper for training time.
+
+### Evaluating
+
+First, extracting mesh from a checkpoint you want to evaluate:
+
+```bash
+scripts/sdf_extract.sh $EXP_NAME config/train_${SCENE_NAME}.yaml $CKPT_PATH 10
+```
+
+The reconstructed meshes will be saved to `PROJECT_PATH/results`.
+
+Then run the evaluation pipline:
+
+```bash
+scipts/eval_pipeline.sh $SCENE_NAME $MESH_PATH
+```
+
+Evaluation results will be saved in the same folder as the evaluated mesh.
+
+
+## Reconstructing custom data
+
+### Ddata preparation
+
 #### Auto generation
 
-We provide a script for autolmatically convert a colmap workspace into our data format:
+We take any COLMAP workspace as input, a script is provided for autolmatically convert a colmap workspace into our data format:
 
 ```bash
 scripts/preprocess_data.sh
@@ -111,7 +146,7 @@ After completing above steps, whether automaticaly or manully, the COLMAP worksp
 Change `DATASET.ROOT_DIR` to COLMAP workspace path in `config/train.yaml`, and run:
 
 ```bash
-scripts/train.sh $EXP_NAME $NUM_GPU $NUM_NODE
+scripts/train.sh $EXP_NAME config/train.yaml $NUM_GPU $NUM_NODE
 ```
 
 Additionally, `NEUCONW.SDF_CONFIG.inside_outside` should be set to `True` if training an indoor scene.
@@ -119,7 +154,7 @@ Additionally, `NEUCONW.SDF_CONFIG.inside_outside` should be set to `True` if tra
 ### Extracting mesh
 
 ```bash
-scripts/sdf_extract.sh $EXP_NAME $CKPT_PATH
+scripts/sdf_extract.sh $EXP_NAME config/train.yaml $CKPT_PATH $EVAL_LEVEL
 ```
 
 The reconstructed meshes will be saved to `PROJECT_PATH/results`.
