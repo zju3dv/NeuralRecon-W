@@ -59,10 +59,11 @@ def colmap_overwrite(colmap_path, image_list):
     for key in images.keys():
         colmap_folder = images[key].name.rsplit('/', 1)[-2] if len(images[key].name.rsplit('/', 1)) > 1 else ''
         image_name = images[key].name.rsplit('/', 1)[-1]
-        if colmap_folder != '' and colmap_folder in image_list:
-            images_new[key] = images[key]
-            new_name = f"{colmap_folder}_{image_name}"
-            images_new[key] = images_new[key]._replace(name=new_name)
+        if colmap_folder != '':
+            if colmap_folder in image_list:
+                images_new[key] = images[key]
+                new_name = f"{colmap_folder}_{image_name}"
+                images_new[key] = images_new[key]._replace(name=new_name)
         else:
             images_new[key] = images[key]
 
