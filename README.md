@@ -12,9 +12,9 @@
 
 ## TODO List
 
-- [x] Training and inference code.
-- [x] Pipeline to reproduce the evaluation results on the proposed Hritage-Recon dataset.
-- [x] Config for reconstructing generic indoor scenes.
+- [x] Training (i.e., reconstruction) code.
+- [x] Toolkit and pipeline to reproduce the evaluation results on the proposed Heritage-Recon dataset.
+- [x] Config for reconstructing generic outdoor/indoor scenes.
 
 ## Installation
 
@@ -26,16 +26,16 @@ scripts/download_sem_model.sh
 
 ## Reproduce reconstruction results on Heritage-Recon
 
-### Data setup
+### Dataset setup
 
-Download the [Heritage-Recon](https://drive.google.com/drive/folders/1ch-RRnC2CrYSeKpbldSwZu5ifKQHS_CU?usp=sharing) dataset and put it under `data`. You can also use gdown to download it in command line:
+Download the [Heritage-Recon](https://drive.google.com/drive/folders/1ch-RRnC2CrYSeKpbldSwZu5ifKQHS_CU?usp=sharing) dataset and put it under `data`. You can also use [gdown](https://github.com/wkentaro/gdown) to download it in command line:
 
 ```bash
 mkdir data && cd data
 gdown --id 1ch-RRnC2CrYSeKpbldSwZu5ifKQHS_CU
 ```
 
-Genrate cache for all scenes:
+Genrate ray cache for all four scenes:
 
 ```bash
 for SCENE_NAME in brandenburg_gate lincoln_memorial palacio_de_bellas_artes pantheon_exterior; do
@@ -48,10 +48,10 @@ done
 To train scenes in our Heritage-Recon dataset:
 
 ```bash
+# Subsutitude `SCENE_NAME` with the scene you want to reconstruct.
 scripts/train.sh $EXP_NAME config/train_${SCENE_NAME}.yaml $NUM_GPU $NUM_NODE
 ```
 
-Subsutitude `SCENE_NAME` with the scene you want to train. Please refer to our paper for training time.
 
 ### Evaluating
 
@@ -69,15 +69,15 @@ Then run the evaluation pipline:
 scripts/eval_pipeline.sh $SCENE_NAME $MESH_PATH
 ```
 
-Evaluation results will be saved in the same folder as the evaluated mesh.
+Evaluation results will be saved in the same folder with the evaluated mesh.
 
 ## Reconstructing custom data
 
-### Ddata preparation
+### Data preparation
 
-#### Auto generation
+#### Automatic generation
 
-We take any COLMAP workspace as input, a script is provided for autolmatically convert a colmap workspace into our data format:
+The code takes a standard COLMAP workspace format as input, a script is provided for autolmatically convert a colmap workspace into our data format:
 
 ```bash
 scripts/preprocess_data.sh
@@ -85,9 +85,9 @@ scripts/preprocess_data.sh
 
 More instructions can be found in `scripts/preprocess_data.sh`
 
-#### Mannuly select
+#### Manual selection
 
-However, if you wish to select a better bounding box mannuly, do the following steps.
+However, if you wish to select a better bounding box (i.e., reconstruction region) manualy, do the following steps.
 
 #### 1. Generate semantic maps
 
@@ -119,7 +119,7 @@ Create a file `config.yaml` into worksapce to write metadata. The target scene n
 
 #### 3. Generate cache
 
-run following command with specified `WORKSAPCE_PATH`:
+Run the following command with a `WORKSAPCE_PATH` specified:
 
 ```bash
 scripts/data_generation.sh $WORKSAPCE_PATH
@@ -161,7 +161,7 @@ Change `DATASET.ROOT_DIR` to COLMAP workspace path in `config/train.yaml`, and r
 scripts/train.sh $EXP_NAME config/train.yaml $NUM_GPU $NUM_NODE
 ```
 
-Additionally, `NEUCONW.SDF_CONFIG.inside_outside` should be set to `True` if training an indoor scene.
+Additionally, `NEUCONW.SDF_CONFIG.inside_outside` should be set to `True` if training an indoor scene (refer to `config/train_indoor.yaml`).
 
 ### Extracting mesh
 
@@ -186,4 +186,4 @@ If you find this code useful for your research, please use the following BibTeX 
 
 ## Acknowledgement
 
-Part of our code is borrowed from [nerf_pl](https://github.com/kwea123/nerf_pl) and [NeuS](https://github.com/Totoro97/NeuS), thanks to their authors for the great works.
+Part of our code is derived from [nerf_pl](https://github.com/kwea123/nerf_pl) and [NeuS](https://github.com/Totoro97/NeuS), thanks to their authors for the great works.
