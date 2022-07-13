@@ -233,7 +233,7 @@ class PhototourismDataset(Dataset):
         return octree_data
 
     def near_far_voxel(self, octree_data, rays_o, rays_d, image_name, chunk_size=65536):
-        """generate near for from interection with sapese voxel.
+        """generate near for from intersection with sparse voxel.
            Input and output are in sfm coordinate system
 
         Args:

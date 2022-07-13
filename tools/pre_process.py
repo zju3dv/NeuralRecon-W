@@ -1,7 +1,7 @@
-# this folder is dedicated to transform original colmapm data into our data
+# this folder is dedicated to transform original colmap data into our data
 
 """
-Input data strcture:
+Input data structure:
 - demo
  - colmap
    - 0
@@ -10,13 +10,13 @@ Input data strcture:
    - VID01
    ...
    
-Output data strcture:
+Output data structure:
 - demo
   - VID00
     - config.yaml
     - semantic maps
     - dense
-      - sprse
+      - sparse
       - images
   - VID01
 """

@@ -68,7 +68,7 @@ for iter in 270000; do
     #   2>&1|tee log/${jobname}_filtering_gt.log
 
 
-    # Evaulation on ours result
+    # Evaluation on ours result
     # # filtering ours
     # python utils/reproj_filter.py \
     #   --src_file ${pred_path}/extracted_mesh_level_10_colored.ply \
@@ -99,7 +99,7 @@ for iter in 270000; do
     #   --n_gpus ${N_GPUS} \
     # 2>&1|tee log/${jobname}_filtering_vismvs.log
 
-    # Evaulation on ours result
+    # Evaluation on ours result
     python utils/eval_mesh.py \
     --file_pred ${pred_path}/${ours_mesh_name} \
     --file_trgt ${eval_target} \
@@ -112,7 +112,7 @@ for iter in 270000; do
     2>&1|tee log/${jobname}_ours.log
 
 
-    # Evaulation on colmap result
+    # Evaluation on colmap result
     python utils/eval_mesh.py \
     --file_pred ${colmap_path}/${colmap_mesh_name} \
     --file_trgt ${eval_target} \
@@ -124,7 +124,7 @@ for iter in 270000; do
     --bbx_name eval_bbx \
     2>&1|tee log/${jobname}_colmap.log
 
-    # # Evaulation on mvs result
+    # # Evaluation on mvs result
     # python utils/eval_mesh.py \
     # --file_pred ${vismvs_path}/${vismvs_mesh_name} \
     # --file_trgt ${eval_target} \
@@ -135,7 +135,7 @@ for iter in 270000; do
     # --save_name $1_${vismvs_mesh_name} \
     # --bbx_name eval_bbx
 
-    # # Evaulation on nerfw result
+    # # Evaluation on nerfw result
     # python utils/eval_mesh.py \
     # --file_pred ${nerfw_path}/${nerfw_mesh_name} \
     # --file_trgt ${eval_target} \

@@ -9,7 +9,7 @@ import os
 
 class DataModule(pl.LightningDataModule):
     """
-    For distributed training, each training process is assgined
+    For distributed training, each training process is assigned
     only a part of the training rays to reduce memory overhead.
     """
 
@@ -48,7 +48,7 @@ class DataModule(pl.LightningDataModule):
         except RuntimeError as re:
             self.world_size = 1
             self.rank = 0
-            logger.warning(str(re) + " (set wolrd_size=1 and rank=0)")
+            logger.warning(str(re) + " (set world_size=1 and rank=0)")
 
         dataset = dataset_dict[self.dataset_config.DATASET_NAME]
         kwargs = {

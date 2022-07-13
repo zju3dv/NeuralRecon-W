@@ -35,7 +35,7 @@ mkdir data && cd data
 gdown --id 1eZvmk4GQkrRKUNZpagZEIY_z8Lsdw94v
 ```
 
-Genrate ray cache for all four scenes:
+Generate ray cache for all four scenes:
 
 ```bash
 for SCENE_NAME in brandenburg_gate lincoln_memorial palacio_de_bellas_artes pantheon_exterior; do
@@ -63,7 +63,7 @@ scripts/sdf_extract.sh $EXP_NAME config/train_${SCENE_NAME}.yaml $CKPT_PATH 10
 
 The reconstructed meshes will be saved to `PROJECT_PATH/results`.
 
-Then run the evaluation pipline:
+Then run the evaluation pipeline:
 
 ```bash
 scripts/eval_pipeline.sh $SCENE_NAME $MESH_PATH
@@ -77,7 +77,7 @@ Evaluation results will be saved in the same folder with the evaluated mesh.
 
 #### Automatic generation
 
-The code takes a standard COLMAP workspace format as input, a script is provided for autolmatically convert a colmap workspace into our data format:
+The code takes a standard COLMAP workspace format as input, a script is provided for automatically convert a colmap workspace into our data format:
 
 ```bash
 scripts/preprocess_data.sh
@@ -87,19 +87,19 @@ More instructions can be found in `scripts/preprocess_data.sh`
 
 #### Manual selection
 
-However, if you wish to select a better bounding box (i.e., reconstruction region) manualy, do the following steps.
+However, if you wish to select a better bounding box (i.e., reconstruction region) manually, do the following steps.
 
 #### 1. Generate semantic maps
 
 Generate semantic maps:
 
 ```bash
-python tools/prepare_data/prepare_semantic_maps.py --root_dir $WORKSAPCE_PATH --gpu 0
+python tools/prepare_data/prepare_semantic_maps.py --root_dir $WORKSPACE_PATH --gpu 0
 ```
 
 #### 2. Create scene metadata file
 
-Create a file `config.yaml` into worksapce to write metadata. The target scene needs to be normalized into a unit sphere, which require manual selection. One simple way is to use SFM key-points points from COLMAP to determine the origin and radius. Also a bounding box is required, which can be set to `[origin-raidus, origin+radius]`, or only the region you're interested in.
+Create a file `config.yaml` into workspace to write metadata. The target scene needs to be normalized into a unit sphere, which require manual selection. One simple way is to use SFM key-points points from COLMAP to determine the origin and radius. Also, a bounding box is required, which can be set to `[origin-raidus, origin+radius]`, or only the region you're interested in.
 
 ```yaml
 {
@@ -119,13 +119,13 @@ Create a file `config.yaml` into worksapce to write metadata. The target scene n
 
 #### 3. Generate cache
 
-Run the following command with a `WORKSAPCE_PATH` specified:
+Run the following command with a `WORKSPACE_PATH` specified:
 
 ```bash
-scripts/data_generation.sh $WORKSAPCE_PATH
+scripts/data_generation.sh $WORKSPACE_PATH
 ```
 
-After completing above steps, whether automaticaly or manully, the COLMAP workspace should be looking like this;
+After completing above steps, whether automatically or manually, the COLMAP workspace should be looking like this;
 
 ```bash
 └── brandenburg_gate

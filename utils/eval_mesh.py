@@ -24,7 +24,7 @@ def get_opts():
                         default='/nas/datasets/IMC/phototourism/training_set/brandenburg_gate/config.yaml',
                         help='scene config path') 
     parser.add_argument('--mesh', default=False, action="store_true",
-                        help='whther prediction is mesh')    
+                        help='whether prediction is mesh')
     parser.add_argument('--threshold',  type=str, default="0.1",
                         help='threshold for precision and recall in cm, in order of [start,end,interval]')
     parser.add_argument('--bbx_name', type=str, default='eval_bbx',
@@ -53,7 +53,7 @@ def eval_mesh(file_pred, file_trgt, scene_config, is_mesh, threshold=.1, bbx_nam
         file_trgt (str): ply file path for ground truth
         scene_config (str): scene reconstruction path
         is_mesh (bool): whether prediction is a mesh
-        thresholds (float, optional): distance threshold. Defaults to .1.
+        threshold (float, optional): distance threshold. Defaults to .1.
         bbx_name (bool, optional): name of the evaluation bounding box
 
     Returns:

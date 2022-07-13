@@ -326,7 +326,7 @@ class NeuconWSystem(LightningModule):
 
         level = int(np.ceil(np.log2(2 * scale / voxel_size)))
         print(
-            f"trining octree will be in level: {level}, with respect to voxel size {2 / (2 ** level) * scale}"
+            f"training octree will be in level: {level}, with respect to voxel size {2 / (2 ** level) * scale}"
         )
 
         return level
