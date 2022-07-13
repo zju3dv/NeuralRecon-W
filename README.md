@@ -28,11 +28,11 @@ scripts/download_sem_model.sh
 
 ### Dataset setup
 
-Download the [Heritage-Recon](https://drive.google.com/drive/folders/1ch-RRnC2CrYSeKpbldSwZu5ifKQHS_CU?usp=sharing) dataset and put it under `data`. You can also use [gdown](https://github.com/wkentaro/gdown) to download it in command line:
+Download the [Heritage-Recon](https://drive.google.com/drive/folders/1eZvmk4GQkrRKUNZpagZEIY_z8Lsdw94v?usp=sharing) dataset and put it under `data`. You can also use [gdown](https://github.com/wkentaro/gdown) to download it in command line:
 
 ```bash
 mkdir data && cd data
-gdown --id 1ch-RRnC2CrYSeKpbldSwZu5ifKQHS_CU
+gdown --id 1eZvmk4GQkrRKUNZpagZEIY_z8Lsdw94v
 ```
 
 Genrate ray cache for all four scenes:
