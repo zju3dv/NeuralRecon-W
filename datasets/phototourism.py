@@ -661,7 +661,7 @@ class PhototourismDataset(Dataset):
                         current_len = rays.size()[0]
                         curent_percent = valid_num / current_len
                         padding_length = int(np.ceil((self.depth_percent * current_len - valid_num) / (1 - self.depth_percent)))
-                        print(f"padding valid depth precentage: from {curent_percent} to {self.depth_percent} with padding {padding_length}")
+                        print(f"padding valid depth percentage: from {curent_percent} to {self.depth_percent} with padding {padding_length}")
 
                         pad_ind =  torch.floor((torch.rand(padding_length) * valid_num)).long()
                         result_length = padding_length + current_len
