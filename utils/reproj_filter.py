@@ -42,9 +42,9 @@ def parse_args():
                         default='results/phototourism/bg_voxel_5_step-20211104_030249_iter_300000/mesh',
                         help='output path')  
     parser.add_argument('--gt', default=False, action="store_true",
-                        help='whther target pc/mesh is in gt coordinates system')         
+                        help='whether target pc/mesh is in gt coordinates system')
     parser.add_argument('--visualize', default=False, action="store_true",
-                        help='whther to store render results')   
+                        help='whether to store render results')
     parser.add_argument('--voxel_size', type=float, default=0.01,
                         help='voxel size in world coordinate system')   
 

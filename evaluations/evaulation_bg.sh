@@ -101,7 +101,7 @@ for ours_dir in results/phototourism/bg_surf_depth_20percent_1e-1-20220115_19000
     #   --n_gpus ${N_GPUS} \
     # 2>&1|tee log/${jobname}_filtering_vismvs.log
 
-    # Evaulation on ours result
+    # Evaluation on ours result
     python utils/eval_mesh.py \
     --file_pred ${pred_path}/${ours_mesh_name} \
     --file_trgt ${eval_target} \
@@ -114,7 +114,7 @@ for ours_dir in results/phototourism/bg_surf_depth_20percent_1e-1-20220115_19000
     2>&1|tee log/${jobname}_ours.log
 
 
-    # # Evaulation on colmap result
+    # # Evaluation on colmap result
     # python utils/eval_mesh.py \
     # --file_pred ${colmap_path}/${colmap_mesh_name} \
     # --file_trgt ${eval_target} \
@@ -127,7 +127,7 @@ for ours_dir in results/phototourism/bg_surf_depth_20percent_1e-1-20220115_19000
     # 2>&1|tee log/${jobname}_colmap.log
 
 
-    # # Evaulation on mvs result
+    # # Evaluation on mvs result
     # python utils/eval_mesh.py \
     # --file_pred ${vismvs_path}/${vismvs_mesh_name} \
     # --file_trgt ${eval_target} \
@@ -138,7 +138,7 @@ for ours_dir in results/phototourism/bg_surf_depth_20percent_1e-1-20220115_19000
     # --save_name $1_${vismvs_mesh_name} \
     # --bbx_name eval_bbx
 
-    # # Evaulation on nerfw result
+    # # Evaluation on nerfw result
     # python utils/eval_mesh.py \
     # --file_pred ${nerfw_path}/${nerfw_mesh_name} \
     # --file_trgt ${eval_target} \

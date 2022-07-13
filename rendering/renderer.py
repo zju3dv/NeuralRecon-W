@@ -547,7 +547,7 @@ class NeuconWRenderer:
                 exit(0)
 
         if self.fine_octree_data is not None and self.boundary_samples > 0:
-            # to ensure boundary doesn't has noisy surface, LOL
+            # to ensure boundary doesn't have noisy surface, LOL
             bound_near_num = self.boundary_samples // 2
             bound_far_num = self.boundary_samples - bound_near_num
 
@@ -729,7 +729,7 @@ class NeuconWRenderer:
         )[:, :-1]
         weights = alpha * transmittance
         # weights_sum_s = weights_s.sum(dim=-1, keepdim=True)
-        # only caculate weights inside sphere
+        # only calculate weights inside sphere
         weights_sum = (weights[:, :n_samples] * inside_sphere).sum(dim=-1, keepdim=True)
 
         sphere_transmittance = torch.cumprod(

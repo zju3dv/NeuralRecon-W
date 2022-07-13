@@ -63,7 +63,7 @@ vismvs_mesh_name="${scene_name}_poisson_mesher_depth_12.ply"
 #   2>&1|tee log/${jobname}_filtering_gt.log
 
 
-# Evaulation on ours result
+# Evaluation on ours result
 # filtering ours
 # python utils/reproj_filter.py \
 #   --src_file ${pred_path}/extracted_mesh_level_10_colored.ply \
@@ -95,7 +95,7 @@ vismvs_mesh_name="${scene_name}_poisson_mesher_depth_12.ply"
 # 2>&1|tee log/${jobname}_ours.log
 
 
-# Evaulation on colmap result
+# Evaluation on colmap result
 # python utils/eval_mesh.py \
 # --file_pred ${colmap_path}/${colmap_mesh_name} \
 # --file_trgt ${eval_target} \
@@ -107,7 +107,7 @@ vismvs_mesh_name="${scene_name}_poisson_mesher_depth_12.ply"
 # 2>&1|tee log/${jobname}_colmap.log
 
 
-# Evaulation on mvs result
+# Evaluation on mvs result
 # python utils/eval_mesh.py \
 # --file_pred ${vismvs_path}/${vismvs_mesh_name} \
 # --file_trgt ${eval_target} \

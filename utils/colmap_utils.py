@@ -83,7 +83,7 @@ def write_next_bytes(fid, data, format_char_sequence, endian_character="<"):
     """pack and write to a binary file.
     :param fid:
     :param data: data to send, if multiple elements are sent at the same time,
-    they should be encapsuled either in a list or a tuple
+    they should be encapsulated either in a list or a tuple
     :param format_char_sequence: List of {c, e, f, d, h, H, i, I, l, L, q, Q}.
     should be the same length as the data list or tuple
     :param endian_character: Any of {@, =, <, >, !}

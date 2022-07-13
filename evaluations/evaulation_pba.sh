@@ -95,7 +95,7 @@ for ours_dir in results/phototourism/surf_guided_pba_depth_40-20220119_204059_it
     #   --n_gpus ${N_GPUS} \
     # 2>&1|tee log/${jobname}_filtering_vismvs.log
 
-    # # Evaulation on ours result
+    # # Evaluation on ours result
     # python utils/eval_mesh.py \
     # --file_pred ${pred_path}/${ours_mesh_name} \
     # --file_trgt ${eval_target} \
@@ -108,7 +108,7 @@ for ours_dir in results/phototourism/surf_guided_pba_depth_40-20220119_204059_it
     # 2>&1|tee log/${jobname}_ours.log
 
 
-    # # Evaulation on colmap result
+    # # Evaluation on colmap result
     # python utils/eval_mesh.py \
     # --file_pred ${colmap_path}/${colmap_mesh_name} \
     # --file_trgt ${eval_target} \
@@ -122,7 +122,7 @@ for ours_dir in results/phototourism/surf_guided_pba_depth_40-20220119_204059_it
     # 2>&1|tee log/${jobname}_colmap.log
 
 
-    # # Evaulation on mvs result
+    # # Evaluation on mvs result
     # python utils/eval_mesh.py \
     # --file_pred ${vismvs_path}/${vismvs_mesh_name} \
     # --file_trgt ${eval_target} \
@@ -134,7 +134,7 @@ for ours_dir in results/phototourism/surf_guided_pba_depth_40-20220119_204059_it
     # --bbx_name eval_bbx
 
 
-    # # Evaulation on nerfw result
+    # # Evaluation on nerfw result
     # python utils/eval_mesh.py \
     # --file_pred ${nerfw_path}/${nerfw_mesh_name} \
     # --file_trgt ${eval_target} \

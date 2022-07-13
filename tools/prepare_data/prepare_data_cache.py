@@ -185,7 +185,7 @@ if __name__ == "__main__":
         os.makedirs(split_path, exist_ok=True)
         print(f"Loading rgb files...")
         n_trunks = args.split_to_chunks
-        print(f"Spliting cache to {args.split_to_chunks} chunks...")
+        print(f"Splitting cache to {args.split_to_chunks} chunks...")
         padding_size = args.split_to_chunks - all_lengths % args.split_to_chunks
 
         if padding_size < args.split_to_chunks:
@@ -199,12 +199,12 @@ if __name__ == "__main__":
         print(
             f"Total length: {all_lengths}, Padding size: {padding_size}, Trunk length: {chunk_length}"
         )
-        print(f"Spliting rgb...")
+        print(f"Splitting rgb...")
         split_to_chunks(
             rgbs, all_lengths, chunk_length, split_path, args, padding_index, "rgbs"
         )
         rays = dataset.all_rays
-        print(f"Spliting ray...")
+        print(f"Splitting ray...")
         split_to_chunks(
             rays, all_lengths, chunk_length, split_path, args, padding_index, "rays"
         )

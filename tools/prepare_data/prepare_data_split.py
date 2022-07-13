@@ -17,7 +17,7 @@ def get_opts():
     parser.add_argument('--min_observation', type=int, default=-1,
                         help='min_observation for view selection')
     parser.add_argument('--roi_threshold', type=float, default=0.5,
-                    help='roi_threshold to filter images')
+                        help='roi_threshold to filter images')
     parser.add_argument('--static_threshold', type=float, default=0.6,)  
     parser.add_argument('--nima_ckpt_path', type=str, default='weights/nima_epoch-34.pth',
                         help='ckpt path for nima model')
