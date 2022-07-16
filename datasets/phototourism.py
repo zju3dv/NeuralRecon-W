@@ -447,7 +447,7 @@ class PhototourismDataset(Dataset):
         if not self.use_cache:
             self.poses_dict = {id_: self.poses[i] for i, id_ in enumerate(self.img_ids)}
 
-            # Step 5. split the img_ids (the number of images is verfied to match that in the paper)
+            # Step 5. split the img_ids (the number of images is verified to match that in the paper)
             # training will use all images
             self.img_ids_train = [
                 id_
@@ -657,6 +657,9 @@ class PhototourismDataset(Dataset):
 
                     if self.depth_percent > 0:
                         valid_depth = rays[:, -2] > 0
+                        if not valid_depth.any():
+                            continue
+
                         valid_num = torch.sum(valid_depth).long().item()
                         current_len = rays.size()[0]
                         curent_percent = valid_num / current_len
