@@ -215,24 +215,24 @@ if __name__ == "__main__":
                 args.root_dir, f"{args.cache_dir}/rays{args.img_downscale}.h5"
             )
             with h5py.File(rays_file, "w") as f:
-                f.create_dataset("rays", data=dataset.all_rays.numpy(), chunks=True)
+                f.create_dataset("rays", data=torch.cat(dataset.all_rays).numpy(), chunks=True)
             rgbs_file = os.path.join(
                 args.root_dir, f"{args.cache_dir}/rgbs{args.img_downscale}.h5"
             )
             with h5py.File(rgbs_file, "w") as f:
-                f.create_dataset("rgbs", data=dataset.all_rgbs.numpy(), chunks=True)
+                f.create_dataset("rgbs", data=torch.cat(dataset.all_rgbs).numpy(), chunks=True)
         else:
             np.savez_compressed(
                 os.path.join(
                     args.root_dir, f"{args.cache_dir}/rays{args.img_downscale}.npz"
                 ),
-                dataset.all_rays.numpy(),
+                torch.cat(dataset.all_rays).numpy(),
             )
             np.savez_compressed(
                 os.path.join(
                     args.root_dir, f"{args.cache_dir}/rgbs{args.img_downscale}.npz"
                 ),
-                dataset.all_rgbs.numpy(),
+                torch.cat(dataset.all_rgbs).numpy(),
             )
         t = (time.time() - start_time) / 60
         print(f"Using {t} min to save!")
