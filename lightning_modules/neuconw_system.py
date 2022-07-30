@@ -248,11 +248,14 @@ class NeuconWSystem(LightningModule):
             )
             out_chunks += [new_sdf.detach().cpu()]
         sdf = torch.cat(out_chunks, 0).reshape(-1)
-        sdf_gathered = [
-            torch.zeros(B, dtype=torch.float, device=device) for _ in range(world_size)
-        ]
-        dist.all_gather(sdf_gathered, sdf.cuda())
-        sdf = torch.cat(sdf_gathered, 0).reshape(-1)[: xyz_training.size()[0]]
+
+        # if multi gpu
+        if self.hparams.num_gpus > 1:
+            sdf_gathered = [
+                torch.zeros(B, dtype=torch.float, device=device) for _ in range(world_size)
+            ]
+            dist.all_gather(sdf_gathered, sdf.cuda())
+            sdf = torch.cat(sdf_gathered, 0).reshape(-1)[: xyz_training.size()[0]]
 
         # filter with threshold
         sparse_pc_sfm = xyz_sfm[sdf <= threshold].cpu().numpy()
