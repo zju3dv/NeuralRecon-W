@@ -78,18 +78,19 @@ class PhototourismDataset(Dataset):
         self.scene_origin = scene_origin
         self.scene_radius = scene_radius
 
-        self.sfm_path = sfm_path
-        
         # hard code sfm depth padding
         scene_name = self.root_dir.rsplit('/')[-1]
         if scene_name == 'brandenburg_gate':
+            sfm_path = '../neuralsfm'
             depth_percent = 0.2
         elif scene_name == 'palacio_de_bellas_artes':
+            sfm_path = '../neuralsfm'
             depth_percent = 0.4
         elif scene_name in ['lincoln_memorial', 'pantheon_exterior']:
             depth_percent = 0.0
         
         self.depth_percent = depth_percent
+        self.sfm_path = sfm_path
         
         print(f"reading sfm result from {self.sfm_path}...")
 
