@@ -116,7 +116,7 @@ class kaolin_renderer():
 
         depth_all = []
         pid_all = []
-        # todo: figure out why chunck size greater or equal than 1768500 will result in error intersection
+        # todo: figure out why chunk size greater or equal than 1768500 will result in error intersection
         # use 1000000 as a threshold just to be safe
         chunk_size = min(rays_o.size()[0], 1000000)
         for i in range(0, rays_o.size()[0], chunk_size):
