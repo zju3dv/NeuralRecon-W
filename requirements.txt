@@ -25,7 +25,8 @@ trimesh==3.9.1
 pyglet==1.5.10
 networkx==2.5
 scikit-image
-pyrender # utils/pyrender_renderer.py need this lib
+pyrender # utils/pyrender_renderer.py needs this lib
+ray # utils/reproj_filter.py needs
 
 # for point cloud
 plyfile==0.7.2
