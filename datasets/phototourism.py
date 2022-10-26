@@ -572,7 +572,7 @@ class PhototourismDataset(Dataset):
                     point3d_ids = img_colmap.point3D_ids[valid_3d_mask]
                     img_p3d = pts3d_array[point3d_ids].cuda()
                     img_err = error_array[point3d_ids].cuda()
-                    img_2d = torch.from_numpy(img_colmap.xys)[valid_3d_mask]
+                    img_2d = torch.from_numpy(img_colmap.xys)[valid_3d_mask] / self.img_downscale
                     depth_sfm, weight = self.get_colmap_depth(
                         img_p3d, img_2d, img_err, pose, intrinsic, img_w, img_h
                     )
@@ -658,9 +658,6 @@ class PhototourismDataset(Dataset):
 
                     if self.depth_percent > 0:
                         valid_depth = rays[:, -2] > 0
-                        if not valid_depth.any():
-                            continue
-
                         valid_num = torch.sum(valid_depth).long().item()
                         current_len = rays.size()[0]
                         curent_percent = valid_num / current_len
