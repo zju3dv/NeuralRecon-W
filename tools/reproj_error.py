@@ -140,13 +140,13 @@ def image_reproj_error(imdata, pts3d, img_ids, entrinsics_dict, intrinsics_dict)
 
 
 
-def gt_reproject_error(data_dir, gt_pcd_path, sfm_to_gt, reconstuct_path, track_length=200, reproj_error=0.4, batch_size=2, img_reproj_error=300):
+def gt_reproject_error(data_dir, gt_pcd_path, sfm_to_gt, reconstruct_path, track_length=200, reproj_error=0.4, batch_size=2, img_reproj_error=300):
     # 0. read data from bin
-    # reconstuct_path = 'dense_ws_filtered_tkl200_mrep.5'
-    # reconstuct_path = 'dense/sparse'
-    imdata = read_images_binary(os.path.join(data_dir, reconstuct_path, 'images.bin'))
-    camdata = read_cameras_binary(os.path.join(data_dir, reconstuct_path, 'cameras.bin'))
-    pts3d = read_points3d_binary(os.path.join(data_dir, reconstuct_path, 'points3D.bin'))
+    # reconstruct_path = 'dense_ws_filtered_tkl200_mrep.5'
+    # reconstruct_path = 'dense/sparse'
+    imdata = read_images_binary(os.path.join(data_dir, reconstruct_path, 'images.bin'))
+    camdata = read_cameras_binary(os.path.join(data_dir, reconstruct_path, 'cameras.bin'))
+    pts3d = read_points3d_binary(os.path.join(data_dir, reconstruct_path, 'points3D.bin'))
 
     gt_pcd = torch.from_numpy(np.array(o3d.io.read_point_cloud(gt_pcd_path).points)).float().cuda()
     img_ids, img_id_to_name = get_image_id(imdata, data_dir)
@@ -254,7 +254,7 @@ def get_opts():
     parser.add_argument('--gt_pcd_path', type=str,
                         default="/nas/datasets/OpenHeritage3D/pro/brandenburg_gate/bg_sampled_0.01_cropped.ply",
                         help='target point cloud')
-    parser.add_argument('--reconstuct_path', type=str,
+    parser.add_argument('--reconstruct_path', type=str,
                         default="dense/sparse",
                         help='reconstruction work space')
     parser.add_argument('--track_length', type=int, default='200',
@@ -274,4 +274,4 @@ if __name__ == "__main__":
     # read scene config
     with open(os.path.join(args.data_dir, 'config.yaml'), "r") as yamlfile:
         scene_config = yaml.load(yamlfile, Loader=yaml.FullLoader)
-    gt_reproject_error(args.data_dir, args.gt_pcd_path, np.array(scene_config['sfm2gt']), args.reconstuct_path, args.track_length, args.reproj_error, args.batch_size, args.img_reproj_error)
+    gt_reproject_error(args.data_dir, args.gt_pcd_path, np.array(scene_config['sfm2gt']), args.reconstruct_path, args.track_length, args.reproj_error, args.batch_size, args.img_reproj_error)

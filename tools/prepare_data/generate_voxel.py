@@ -39,7 +39,7 @@ def expand_points(points, voxel_size):
 
 
 def gen_octree_from_sfm(
-    recontruct_path,
+    reconstruct_path,
     min_track_length,
     voxel_size,
     sfm_path="sparse",
@@ -49,7 +49,7 @@ def gen_octree_from_sfm(
     radius=1.0,
 ):
     # read 3d points from sfm result, and filter them
-    point_path = os.path.join(recontruct_path, f"dense/{sfm_path}/points3D.bin")
+    point_path = os.path.join(reconstruct_path, f"dense/{sfm_path}/points3D.bin")
     points_3d = read_points3d_binary(point_path)
     points_ori = []
     for id, p in points_3d.items():
@@ -68,12 +68,12 @@ def gen_octree_from_sfm(
         o3d.io.write_point_cloud(f"samples/voxel_vis_source.ply", gt_pcd)
 
     return gen_octree(
-        recontruct_path, points, voxel_size, device, visualize, expand, radius
+        reconstruct_path, points, voxel_size, device, visualize, expand, radius
     )
 
 
 def gen_octree(
-    recontruct_path,
+    reconstruct_path,
     points,
     voxel_size,
     device=0,
@@ -82,7 +82,7 @@ def gen_octree(
     radius=1.0,
     in_sfm=True,
 ):
-    scene_config_path = os.path.join(recontruct_path, "config.yaml")
+    scene_config_path = os.path.join(reconstruct_path, "config.yaml")
     # read scene config
     with open(scene_config_path, "r") as yamlfile:
         scene_config = yaml.load(yamlfile, Loader=yaml.FullLoader)
@@ -107,7 +107,7 @@ def gen_octree(
     # dimensions
     dim = np.max(bbx_max - bbx_min)
 
-    # points dialation
+    # points dilation
     for _ in range(expand):
         points = expand_points(points, voxel_size)
 
@@ -192,7 +192,7 @@ def level_upgrade(
     octree_scale,
     src_level,
     target_level,
-    recontruct_path,
+    reconstruct_path,
     visualize=False,
 ):
     # upsample octree
@@ -231,7 +231,7 @@ def level_upgrade(
     xyz_sfm = sparse_ind_up * target_voxel_size + vol_origin
 
     return gen_octree(
-        recontruct_path,
+        reconstruct_path,
         xyz_sfm.cpu().numpy(),
         target_voxel_size,
         device=device,
@@ -246,7 +246,7 @@ def level_downgrade(
     octree_scale,
     src_level,
     target_level,
-    recontruct_path,
+    reconstruct_path,
     visualize=False,
 ):
     device = octree.device
@@ -266,7 +266,7 @@ def level_downgrade(
     target_voxel_size = 2 / (2**target_level) * octree_scale
 
     return gen_octree(
-        recontruct_path,
+        reconstruct_path,
         xyz_sfm,
         target_voxel_size,
         device=device,
@@ -281,7 +281,7 @@ def octree_level_adjust(
     octree_scale,
     src_level,
     target_level,
-    recontruct_path,
+    reconstruct_path,
     visualize,
 ):
     if target_level > src_level:
@@ -291,7 +291,7 @@ def octree_level_adjust(
             octree_scale,
             src_level,
             target_level,
-            recontruct_path,
+            reconstruct_path,
             visualize,
         )
     elif target_level < src_level:
@@ -301,7 +301,7 @@ def octree_level_adjust(
             octree_scale,
             src_level,
             target_level,
-            recontruct_path,
+            reconstruct_path,
             visualize,
         )
     else:
@@ -328,7 +328,7 @@ def get_near_far(
 
     'with_exit': set true to obtain accurate far. Default to false as this will perform aabb twice
     """
-    # Avoid corner cases. issuse in kaolin: https://github.com/NVIDIAGameWorks/kaolin/issues/490
+    # Avoid corner cases. issues in kaolin: https://github.com/NVIDIAGameWorks/kaolin/issues/490
     rays_d = rays_d.clone() + 1e-7
     rays_o = rays_o.clone() + 1e-7
 
@@ -446,10 +446,10 @@ if __name__ == "__main__":
     from torch.utils.data import DataLoader
 
     voxel_size = 0.1
-    recontruct_path = "/nas/datasets/IMC/phototourism/training_set/brandenburg_gate"
+    reconstruct_path = "/nas/datasets/IMC/phototourism/training_set/brandenburg_gate"
     min_track_length = 50
     octree, scene_origin, scale, level = gen_octree_from_sfm(
-        recontruct_path, min_track_length, voxel_size, visualize=True
+        reconstruct_path, min_track_length, voxel_size, visualize=True
     )
     # gen fake ray origin and direction
     rays_o = (
