@@ -14,7 +14,7 @@ class NeuconWLoss(nn.Module):
         self.igr_weight = igr_weight
         self.mask_weight = mask_weight
         self.depth_weight = depth_weight
-        self.floor_weight = depth_weight
+        self.floor_weight = floor_weight
         
         self.config = config
 
