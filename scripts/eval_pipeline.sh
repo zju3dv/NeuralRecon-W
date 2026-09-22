@@ -48,12 +48,12 @@ elif [ ${scene_name} == 'pantheon_exterior' ]; then
     reproj_error=1.4
     voxel_size=0.1
 else
-    echo Not suppotted scene: ${scene_name}
+    echo Not supported scene: ${scene_name}
     return
 fi
 
 
-echo Evaulating ${pred_dir} ...
+echo Evaluating ${pred_dir} ...
 
 # filtering pred
 python utils/reproj_filter.py \
@@ -66,7 +66,7 @@ python utils/reproj_filter.py \
 2>&1|tee log/${jobname}_filtering_pred.log
 
 
-# Evaulation on pred result
+# Evaluation on pred result
 python utils/eval_mesh.py \
 --file_pred ${pred_path}/${pred_mesh_name} \
 --file_trgt ${eval_target} \

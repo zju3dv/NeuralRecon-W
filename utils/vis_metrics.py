@@ -18,7 +18,7 @@ def get_opts():
     return parser.parse_args()   
 
 
-def svae_plot(ind, data1, data2, name1, name2, save_path, name):
+def save_plot(ind, data1, data2, name1, name2, save_path, name):
     plt.plot(ind, np.array(data1) * 100, "-b", label=name1)
     plt.plot(ind, np.array(data2) * 100, "-r", label=name2)
     plt.legend(loc="upper left")
@@ -46,7 +46,7 @@ def vis_results(ours_path, colmap_path, save_name, max_num):
     save_path = os.path.join("eval_results", f"{save_name}")
     os.makedirs(save_path, exist_ok=True)
     for key in ours_metrics.keys():
-        svae_plot(thresholds, ours_metrics[key][:max_num],  colmap_metrics[key][:max_num], \
+        save_plot(thresholds, ours_metrics[key][:max_num],  colmap_metrics[key][:max_num], \
                     "ours", "colmap", save_path, f"{key}")
 
 if __name__ == "__main__":

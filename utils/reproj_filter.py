@@ -252,12 +252,12 @@ def split_list(_list, n):
 
 
 if __name__ == "__main__":
-    reconstuct_path = 'dense/sparse'
+    reconstruct_path = 'dense/sparse'
     print(f"result will be saved to {args.output_path}")
     os.makedirs(args.output_path, exist_ok=True)
 
-    imdata = read_images_binary(os.path.join(args.data_path, reconstuct_path, 'images.bin'))
-    camdata = read_cameras_binary(os.path.join(args.data_path, reconstuct_path, 'cameras.bin'))
+    imdata = read_images_binary(os.path.join(args.data_path, reconstruct_path, 'images.bin'))
+    camdata = read_cameras_binary(os.path.join(args.data_path, reconstruct_path, 'cameras.bin'))
     img_ids_all, img_id_to_name, img_path_to_id = get_image_id(imdata, args.data_path)
     img_ids = get_train_ids(args.data_path, img_ids_all, img_path_to_id)
     print(f"views to process: {len(img_ids)}")

@@ -106,7 +106,7 @@ class NeuconWSystem(LightningModule):
 
         spc_options = {
             "voxel_size": self.scene_config["voxel_size"],
-            "recontruct_path": self.config.DATASET.ROOT_DIR,
+            "reconstruct_path": self.config.DATASET.ROOT_DIR,
             "min_track_length": self.scene_config["min_track_length"],
         }
         self.renderer = NeuconWRenderer(
@@ -272,14 +272,14 @@ class NeuconWSystem(LightningModule):
 
         del self.renderer.fine_octree_data
 
-        # get suface points
+        # get surface points
         sparse_pc_sfm, train_voxel_size = self.surface_selection(
             train_level, threshold, device, chunk
         )
 
         # use remaining points to generate new octree
         octree_new, scene_origin, scale, level = gen_octree(
-            self.renderer.recontruct_path,
+            self.renderer.reconstruct_path,
             sparse_pc_sfm,
             train_voxel_size,
             device=device,

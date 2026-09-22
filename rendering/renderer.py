@@ -94,14 +94,14 @@ class NeuconWRenderer:
         self.sample_range = sample_range
         self.fine_octree_data = None
         if self.nerf_far_override:
-            self.recontruct_path = spc_options["recontruct_path"]
+            self.reconstruct_path = spc_options["reconstruct_path"]
             self.min_track_length = spc_options["min_track_length"]
             self.voxel_size = spc_options["voxel_size"]
 
         self.sfm_to_gt = np.eye(4)
 
         # read unit sphere origin and radius from scene config
-        scene_config_path = os.path.join(spc_options["recontruct_path"], "config.yaml")
+        scene_config_path = os.path.join(spc_options["reconstruct_path"], "config.yaml")
         if os.path.isfile(scene_config_path):
             with open(scene_config_path, "r") as yamlfile:
                 scene_config = yaml.load(yamlfile, Loader=yaml.FullLoader)
@@ -136,7 +136,7 @@ class NeuconWRenderer:
 
     def get_octree(self, device):
         octree, scene_origin, scale, level = gen_octree_from_sfm(
-            self.recontruct_path, self.min_track_length, self.voxel_size, device=device
+            self.reconstruct_path, self.min_track_length, self.voxel_size, device=device
         )
 
         octree_data = {}
@@ -385,7 +385,7 @@ class NeuconWRenderer:
         octree_level = octree_data["level"]
         spc_data = octree_data["spc_data"]
 
-        # transfrom origins and direction of rays to sfm coordinate system
+        # transform origins and direction of rays to sfm coordinate system
         rays_o_sfm = (rays_o * self.radius).view(-1, 3) + self.origin
 
         # generate near far from spc
@@ -423,7 +423,7 @@ class NeuconWRenderer:
         train_voxel_size = octree_data["voxel_size"]
         train_spc_data = octree_data["spc_data"]
 
-        # transfrom origins and direction of rays to sfm coordinate system
+        # transform origins and direction of rays to sfm coordinate system
         rays_o_sfm = (rays_o * self.radius).view(-1, 3) + self.origin
 
         # generate near far from spc
@@ -456,7 +456,7 @@ class NeuconWRenderer:
         return voxel_near, voxel_far, ~miss_mask
 
     def sparse_sampler(self, rays_o, rays_d, near, far, perturb):
-        """sample on spaese voxel. Including upsample on sparse voxels,
+        """sample on sparse voxel. Including upsample on sparse voxels,
         and uniform sample on inverse depth of original near far,
         Note that input coordinates are scaled to unit sphere
 

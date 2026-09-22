@@ -29,13 +29,13 @@ def get_opts():
                         choices=['blender', 'phototourism'],
                         help='which dataset to validate')
     parser.add_argument('--eval_level', type=int, default=-1,
-                        help='level og precision')
+                        help='level of precision')
     parser.add_argument('--mesh_size', type=int, default=128,
                         help='resolution of mesh, (N, N, N)')
     parser.add_argument('--mesh_origin', type=str, default="0, 0, 0",
                         help='origin of mesh, (x, y, z)')
     parser.add_argument('--mesh_radius', type=float, default=1.0,
-                        help='radius pf mesh')
+                        help='radius of mesh')
     parser.add_argument('--vertex_color', default=False, action="store_true",
                         help='whether add color to mesh')
     parser.add_argument('--num_gpus', type=int, default=1,
